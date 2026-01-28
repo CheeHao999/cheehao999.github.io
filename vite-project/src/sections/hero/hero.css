@@ -1,0 +1,109 @@
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-lg) 0;
+}
+
+.hero-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50vw;
+  /* smaller size */
+  height: 50vw;
+  background: radial-gradient(circle, #00f 0%, transparent 70%);
+  opacity: 0.2;
+  filter: blur(80px);
+  /* less blur */
+  pointer-events: none;
+  z-index: -1;
+  will-change: transform, opacity;
+  /* GPU hint */
+}
+
+.hero-glow::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  /* slightly smaller */
+  background: radial-gradient(circle, #00f 0%, transparent 60%);
+  opacity: 0.15;
+  filter: blur(120px);
+  /* less blur */
+}
+
+
+.hero-content {
+  text-align: center;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: visible;
+}
+
+
+.hero-title {
+  font-size: clamp(4rem, 10vw, 12rem);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  margin-bottom: var(--space-md);
+  margin-top: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  /* Gradient Text */
+  background: linear-gradient(135deg, var(--color-text-main) 30%, var(--color-text-muted));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* Fallback */
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-tagline {
+  font-size: clamp(1.2rem, 3vw, 1.75rem);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-lg);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  max-width: 30ch;
+}
+
+.hero-actions {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 15vw;
+  }
+}
+
+.hero-title,
+.hero-tagline,
+.hero-actions {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  /* optional, helps with GPU */
+}
+
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  opacity: 0.4;
+  /* subtle overlay */
+}
