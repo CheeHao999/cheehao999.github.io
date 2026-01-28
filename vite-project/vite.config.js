@@ -6,8 +6,8 @@ export default defineConfig({
   base: '/',
   
   build: {
-    // Output directory for production build
-    outDir: '../../dist',
+    // Output directory for production build (relative to vite-project/)
+    outDir: '../dist',
     // Clear output directory before build
     emptyOutDir: true,
   }
