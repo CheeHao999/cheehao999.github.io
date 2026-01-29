@@ -1,5 +1,6 @@
 import gsap from 'gsap';
 import './hero.css';
+import heroVideo from './hero_video2.mp4';
 
 const heroContainer = document.querySelector('#hero');
 if (!heroContainer) throw new Error('Hero container not found');
@@ -57,7 +58,7 @@ tl.fromTo(
 
 // Add background video
 const videoEl = document.createElement('video');
-videoEl.src = '/src/sections/hero/hero_video2.mp4';
+videoEl.src = heroVideo;
 videoEl.autoplay = true;
 videoEl.loop = true;
 videoEl.muted = true;
