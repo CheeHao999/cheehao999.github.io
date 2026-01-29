@@ -9,8 +9,8 @@ if (aboutContainer) {
         <h2 class="section-title">About Me</h2>
         <div class="about-content">
           <div class="about-text">
+            <p>A First-Year Computer Science student at UTAR. Currently expanding my skills in agentic AI and web graphics.</p>
             <p>I build accessible, pixel-perfect, and performant web experiences. I'm obsessed with fluid animations and clean code structure.</p>
-            <p>Currently studying Computer Science and expanding my skills in agentic AI and 3D web graphics.</p>
           </div>
           
           <div style="position: relative;">
