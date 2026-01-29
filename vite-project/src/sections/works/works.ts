@@ -28,11 +28,6 @@ const projects = [
     tech: 'Mini Project',
     description: 'Implemented a scalable microservices architecture into a F&B system using the Moleculer framework for efficient backend communication.'
   },
-  { 
-    title: 'Portfolio Website', 
-    tech: 'Mini Project',
-    description: 'Designed and built this responsive portfolio using TypeScript, Vite, and GSAP with physics-based interactions.'
-  },
 ];
 
 // Select container
