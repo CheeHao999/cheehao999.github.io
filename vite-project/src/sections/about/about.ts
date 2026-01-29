@@ -48,17 +48,38 @@ if (aboutContainer) {
     const engine = Engine.create();
     const world = engine.world;
 
+    // Improve physics stability
+    engine.positionIterations = 10;
+    engine.velocityIterations = 8;
+
     // Container dimensions
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+    let width = container.clientWidth;
+    let height = container.clientHeight;
 
-    // Create walls
-    const wallOptions = { isStatic: true, render: { visible: false } };
-    const ground = Bodies.rectangle(width / 2, height + 30, width, 60, wallOptions);
-    const leftWall = Bodies.rectangle(-30, height / 2, 60, height, wallOptions);
-    const rightWall = Bodies.rectangle(width + 30, height / 2, 60, height, wallOptions);
+    // Create walls variables
+    let ground: Matter.Body;
+    let leftWall: Matter.Body;
+    let rightWall: Matter.Body;
+    
+    // Function to create/update walls
+    const updateWalls = () => {
+      // Remove existing walls if they exist
+      if (ground) Composite.remove(world, [ground, leftWall, rightWall]);
+      
+      width = container.clientWidth;
+      height = container.clientHeight;
+      
+      const wallThickness = 100; // Thicker walls to prevent tunneling
+      const wallOptions = { isStatic: true, render: { visible: false } };
+      
+      ground = Bodies.rectangle(width / 2, height + wallThickness/2, width, wallThickness, wallOptions);
+      leftWall = Bodies.rectangle(-wallThickness/2, height / 2, wallThickness, height * 2, wallOptions);
+      rightWall = Bodies.rectangle(width + wallThickness/2, height / 2, wallThickness, height * 2, wallOptions);
+      
+      Composite.add(world, [ground, leftWall, rightWall]);
+    };
 
-    Composite.add(world, [ground, leftWall, rightWall]);
+    updateWalls();
 
     // Skills Data
     const skills = [
@@ -167,15 +188,21 @@ if (aboutContainer) {
 
     // Handle resize
     window.addEventListener('resize', () => {
-      // Update boundaries
-      const newWidth = container.clientWidth;
-      const newHeight = container.clientHeight;
+      // Recreate walls to fit new dimensions
+      updateWalls();
       
-      Matter.Body.setPosition(ground, { x: newWidth / 2, y: newHeight + 30 });
-      Matter.Body.setPosition(rightWall, { x: newWidth + 30, y: newHeight / 2 });
-      
-      // We don't update leftWall or bodies to avoid complex logic, 
-      // but ideally we'd push bodies back in bounds if needed.
+      // Push any out-of-bounds bodies back in
+      bodies.forEach(body => {
+        if (body.position.x > width) {
+          Matter.Body.setPosition(body, { x: width - 50, y: body.position.y });
+        }
+        if (body.position.x < 0) {
+          Matter.Body.setPosition(body, { x: 50, y: body.position.y });
+        }
+        if (body.position.y > height) {
+          Matter.Body.setPosition(body, { x: body.position.x, y: height - 50 });
+        }
+      });
     });
   };
 
