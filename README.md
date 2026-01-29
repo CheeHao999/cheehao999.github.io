@@ -16,7 +16,7 @@ A modern, immersive personal portfolio website built with **TypeScript**, **Vite
 - **Hero Section:** Immersive background video with text reveal animations and dynamic shuffling text effects.
 - **Interactive About Section:** Features a physics-based skills simulation using Matter.js where users can drag, toss, and collide skill elements. Includes a refreshable "dropping" animation.
 - **Works Showcase:** Portfolio gallery to display projects.
-- **Contact Section:** Modern grid layout with hover effects, featuring quick access to Discord, Email, Github, and Location details.
+- **Contact Section:** Modern grid layout with hover effects, featuring quick access to Email, Github, and Location details.
 - **Responsive Navbar:** Glass-morphism navigation bar with a smooth mobile toggle and hamburger menu.
 - **Animations:** High-performance, smooth animations using GSAP Timeline and CSS transitions.
 - **Responsive Design:** Mobile-first approach ensuring compatibility across all devices.
