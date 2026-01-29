@@ -178,6 +178,22 @@ if (aboutContainer) {
         const { x, y } = body.position;
         const angle = body.angle;
 
+        // Continuous Boundary Enforcement (Fix for "flying out")
+        // If body goes outside, gently nudge it back
+        if (x < 0) {
+            Matter.Body.setPosition(body, { x: 30, y: y });
+            Matter.Body.setVelocity(body, { x: 2, y: body.velocity.y });
+        }
+        if (x > width) {
+            Matter.Body.setPosition(body, { x: width - 30, y: y });
+            Matter.Body.setVelocity(body, { x: -2, y: body.velocity.y });
+        }
+        if (y > height + 50) {
+            // If it somehow falls through floor, reset to top
+            Matter.Body.setPosition(body, { x: x, y: -100 });
+            Matter.Body.setVelocity(body, { x: 0, y: 0 });
+        }
+
         // Sync DOM with physics body
         el.style.transform = `translate(${x}px, ${y}px) rotate(${angle}rad) translate(-50%, -50%)`;
       });

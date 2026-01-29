@@ -64,7 +64,12 @@ videoEl.loop = true;
 videoEl.muted = true;
 videoEl.playsInline = true;
 videoEl.className = 'hero-video';
-heroContainer.appendChild(videoEl);
+const heroSection = heroContainer.querySelector('.hero');
+if (heroSection) {
+  heroSection.appendChild(videoEl);
+} else {
+  heroContainer.appendChild(videoEl);
+}
 
 function shuffleText(el: HTMLElement, speed = 40) {
   const finalText = el.textContent || '';
