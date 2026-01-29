@@ -167,9 +167,11 @@ if (aboutContainer) {
 
     // Run the engine
     const runner = Runner.create();
-    Runner.run(runner, engine);
+    
+    // Render loop and Intersection Observer for performance
+    let renderLoopId: number | null = null;
+    let isRunning = false;
 
-    // Render loop
     const update = () => {
       bodies.forEach((body, i) => {
         const el = elements[i];
@@ -177,14 +179,37 @@ if (aboutContainer) {
         const angle = body.angle;
 
         // Sync DOM with physics body
-        // -50% -50% to center the element on the body's center of mass
         el.style.transform = `translate(${x}px, ${y}px) rotate(${angle}rad) translate(-50%, -50%)`;
       });
 
-      requestAnimationFrame(update);
+      if (isRunning) {
+        renderLoopId = requestAnimationFrame(update);
+      }
     };
 
-    update();
+    // Use IntersectionObserver to only run physics when visible
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (!isRunning) {
+            isRunning = true;
+            Runner.run(runner, engine);
+            update();
+          }
+        } else {
+          if (isRunning) {
+            isRunning = false;
+            Runner.stop(runner);
+            if (renderLoopId) {
+              cancelAnimationFrame(renderLoopId);
+              renderLoopId = null;
+            }
+          }
+        }
+      });
+    }, { threshold: 0.1 });
+
+    observer.observe(container);
 
     // Handle resize
     window.addEventListener('resize', () => {
