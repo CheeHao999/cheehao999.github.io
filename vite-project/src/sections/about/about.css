@@ -120,12 +120,21 @@
         margin-top: var(--space-md);
     }
 
-    /* Disable expensive animation on mobile */
+    /* Ensure RGB effect persists on mobile but maybe simpler if performance is a concern, 
+       but user requested it to be RGB. Let's restore the gradient but maybe keep animation disabled or slower if needed. 
+       For now, fully restoring the look. */
     .skill-capsule {
-        animation: none;
-        background-image: none;
-        background: rgba(18, 18, 22, 0.95);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        /* Re-enable background image for RGB border */
+        background-image: 
+            linear-gradient(rgba(18, 18, 22, 0.9), rgba(18, 18, 22, 0.9)), 
+            linear-gradient(45deg, #ff004c, #ff9f00, #ffee00, #00ff85, #00c8ff, #7a5cff, #ff00c8);
+        border: 2px solid transparent;
+        /* Optional: Keep animation running or disable it. 
+           If "not rgb" means just the color is missing, restoring background-image fixes it.
+           If they want the animation too, we remove 'animation: none'. 
+           Let's enable it all but maybe use a static background position if performance was the original reason.
+           However, user asked for "RGB", implying the look. */
+        animation: rgb-border-flow 3s linear infinite; 
     }
 }
 
