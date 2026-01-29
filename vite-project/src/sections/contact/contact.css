@@ -9,21 +9,85 @@
     align-items: center;
 }
 
-.contact-text {
-    margin-bottom: var(--space-md);
-    color: var(--color-text-muted);
-}
-
-.contact-btn {
+.contact-subtitle {
     font-size: 1.25rem;
-    padding: 1em 2em;
-    background: white;
-    color: black;
+    color: var(--color-text-muted);
+    margin-bottom: 3rem;
+    font-weight: 300;
 }
 
-.contact-btn:hover {
-    background: var(--color-primary);
-    color: white;
+/* Contact Grid */
+.contact-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 500px;
+}
+
+/* Contact Item (Row) */
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 1.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    transition: all 0.3s var(--ease-smooth);
+    width: 100%;
+}
+
+.contact-item:hover {
+    border-color: var(--color-primary);
+    background: rgba(18, 18, 22, 0.95);
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.5);
+    transform: translateX(5px);
+}
+
+/* Icon Box */
+.icon-box {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    transition: background 0.3s ease;
+    flex-shrink: 0;
+}
+
+.contact-item:hover .icon-box {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Specific Colors */
+.icon-box.gmail { color: #EA4335; }
+.icon-box.discord { color: #5865F2; }
+.icon-box.location { color: #2dd4bf; }
+
+/* Contact Details (Right Side) */
+.contact-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    text-align: left;
+}
+
+.contact-details .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-dim);
+    font-weight: 600;
+}
+
+.contact-details .value {
+    font-size: 1.1rem;
+    color: var(--color-text-main);
+    font-weight: 500;
 }
 
 .footer {
@@ -34,4 +98,14 @@
     text-align: center;
     font-size: 0.9rem;
     color: var(--color-text-dim);
+}
+
+@media (max-width: 600px) {
+    .contact-item {
+        padding: 1rem;
+    }
+    
+    .contact-details .value {
+        font-size: 1rem;
+    }
 }

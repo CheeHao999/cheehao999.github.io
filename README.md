@@ -8,16 +8,17 @@ A modern, immersive personal portfolio website built with **TypeScript**, **Vite
 
 - **Framework/Build Tool:** [Vite](https://vitejs.dev/)
 - **Language:** [TypeScript](https://www.typescriptlang.org/) (ES2022)
-- **Animation:** [GSAP](https://greensock.com/gsap/) (GreenSock Animation Platform)
+- **Animation:** [GSAP](https://greensock.com/gsap/) (GreenSock Animation Platform) & [Matter.js](https://brm.io/matter-js/) (Physics Engine)
 - **Styling:** CSS3 with Custom Properties (Design Tokens)
 
 ## ✨ Features
 
-- **Hero Section:** Immersive background video with text reveal animations.
+- **Hero Section:** Immersive background video with text reveal animations and dynamic shuffling text effects.
+- **Interactive About Section:** Features a physics-based skills simulation using Matter.js where users can drag, toss, and collide skill elements. Includes a refreshable "dropping" animation.
 - **Works Showcase:** Portfolio gallery to display projects.
-- **About Section:** Information about the developer.
-- **Contact Section:** Contact information and call-to-action.
-- **Animations:** High-performance, smooth animations using GSAP Timeline.
+- **Contact Section:** Modern grid layout with hover effects, featuring quick access to Discord, Email, and Location details.
+- **Responsive Navbar:** Glass-morphism navigation bar with a smooth mobile toggle and hamburger menu.
+- **Animations:** High-performance, smooth animations using GSAP Timeline and CSS transitions.
 - **Responsive Design:** Mobile-first approach ensuring compatibility across all devices.
 
 ## 📂 Project Structure
@@ -31,7 +32,7 @@ e-portfolio/
 │   │   ├── sections/       # Feature Sections
 │   │   │   ├── hero/       # Hero section (video & intro)
 │   │   │   ├── works/      # Projects showcase
-│   │   │   ├── about/      # About me
+│   │   │   ├── about/      # About me (Physics skills)
 │   │   │   └── contact/    # Contact info
 │   │   ├── components/     # Reusable components (e.g., Navbar)
 │   │   ├── shared/         # Utilities and shared animations
