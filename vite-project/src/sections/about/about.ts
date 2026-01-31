@@ -9,8 +9,8 @@ if (aboutContainer) {
         <h2 class="section-title">About Me</h2>
         <div class="about-content">
           <div class="about-text">
-            <p>A First-Year Computer Science student at UTAR. Currently expanding my skills in agentic AI and web graphics.</p>
-            <p>I build accessible, pixel-perfect, and performant web experiences. I'm obsessed with fluid animations and clean code structure.</p>
+            <p>A first-year Computer Science student at UTAR who is eager to learn and explore new technologies. I am looking for opportunities to improve myself and gain new knowledge. Currently, expanding my skills in agentic AI, web graphics, and backend development.</p>
+            <p>I enjoy building clean and user-friendly web applications with a focus on performance and accessibility. I also take on small projects and provide website development solutions.</p>
           </div>
           
           <div style="position: relative;">

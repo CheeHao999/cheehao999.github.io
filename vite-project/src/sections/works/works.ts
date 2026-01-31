@@ -19,13 +19,13 @@ const projects = [
     description: 'Edited and produced creative video content using industry-standard tools.'
   },
   { 
-    title: 'Campus Lost & Found', 
-    tech: 'Mini Project',
-    description: 'A platform connecting students to lost items on campus, simplifying the recovery process.'
+    title: 'Trinity', 
+    tech: 'Ongoing Mini Project',
+    description: 'A Campus Lost & Found platform connecting students to lost items on campus, simplifying the recovery process.'
   },
   { 
     title: 'Moleculer Microservices', 
-    tech: 'Mini Project',
+    tech: 'Ongoing Mini Project',
     description: 'Implemented a scalable microservices architecture into a F&B system using the Moleculer framework for efficient backend communication.'
   },
 ];
