@@ -4,10 +4,12 @@ const navbarContainer = document.createElement('nav');
 navbarContainer.className = 'navbar';
 navbarContainer.innerHTML = `
   <div class="container navbar-content">
-    <!-- Collapse Button (Mobile Only) -->
-    <button class="nav-collapse-btn" aria-label="Toggle navigation">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M6 9l6 6 6-6"/>
+    <a href="#hero" class="logo">CH | Portfolio</a>
+    
+    <!-- Mobile Dock Toggle Button -->
+    <button class="dock-toggle-btn" aria-label="Toggle navigation dock">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 18l6-6-6-6" />
       </svg>
     </button>
 
@@ -57,29 +59,12 @@ navbarContainer.innerHTML = `
 document.body.prepend(navbarContainer);
 
 // Collapse Logic
-const collapseBtn = navbarContainer.querySelector('.nav-collapse-btn');
+const toggleBtn = navbarContainer.querySelector('.dock-toggle-btn');
 const navMenu = navbarContainer.querySelector('.nav-menu');
 
-if (collapseBtn && navMenu) {
-  collapseBtn.addEventListener('click', () => {
-    navMenu.classList.toggle('collapsed');
-    collapseBtn.classList.toggle('active');
-  });
-
-  // Auto-collapse on scroll (Mobile only)
-  let lastScrollY = window.scrollY;
-  window.addEventListener('scroll', () => {
-    if (window.innerWidth <= 768) { // Only check on mobile
-      const currentScrollY = window.scrollY;
-      
-      // If scrolling down and menu is open, collapse it
-      if (currentScrollY > lastScrollY && !navMenu.classList.contains('collapsed')) {
-        navMenu.classList.add('collapsed');
-        collapseBtn.classList.remove('active');
-      }
-      
-      lastScrollY = currentScrollY;
-    }
+if (toggleBtn && navMenu) {
+  toggleBtn.addEventListener('click', () => {
+    navbarContainer.classList.toggle('dock-hidden');
   });
 }
 

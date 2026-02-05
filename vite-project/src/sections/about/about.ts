@@ -86,7 +86,11 @@ if (aboutContainer) {
       render: {
         visible: boolean;
         opacity?: number;
-        sprite?: Matter.ISprite;
+        sprite?: {
+            texture: string;
+            xScale: number;
+            yScale: number;
+        };
         element?: HTMLElement; // Custom property
       }
     }

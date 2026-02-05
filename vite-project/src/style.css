@@ -124,12 +124,16 @@ a:hover {
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5em;
-  padding: 0.8em 1.6em;
+  height: 48px; /* Fixed height for perfect centering */
+  padding: 0 2em; /* Horizontal padding only */
   background: var(--color-primary);
   color: white;
   border-radius: 99px;
-  font-weight: 600;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1; /* Reset line height */
   transition: transform 0.3s var(--ease-elastic), box-shadow 0.3s var(--ease-smooth);
   border: 1px solid transparent;
 }
@@ -182,9 +186,9 @@ a:hover {
 
 section,
 [id] {
-  scroll-margin-top: 140px; /* Increased from 120px */
+  scroll-margin-top: 100px;
   /* height of navbar + breathing room */
-  padding-top: 40px; /* Increased padding */
+  padding-top: 0;
 }
 
 /* Remove extra padding from Hero to let video fill screen */

@@ -17,7 +17,6 @@ heroContainer.innerHTML = `
 
       <div class="hero-actions reveal-text">
         <button class="btn" id="btn-work">Learn more</button>
-        <button class="btn btn-ghost" id="btn-contact">Get in Touch</button>
       </div>
     </div>
   </section>
@@ -25,11 +24,7 @@ heroContainer.innerHTML = `
 
 /* Smooth scroll buttons */
 document.getElementById('btn-work')?.addEventListener('click', () => {
-  document.getElementById('works')?.scrollIntoView({ behavior: 'smooth' });
-});
-
-document.getElementById('btn-contact')?.addEventListener('click', () => {
-  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
 });
 
 // GSAP Timeline

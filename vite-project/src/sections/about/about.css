@@ -140,7 +140,7 @@
 
 .about-section {
     padding-top: 150px;
-    padding-bottom: 4rem;
+    padding-bottom: 12rem; /* Further extended length */
     min-height: 100vh;
     scroll-margin-top: 150px;
     position: relative;
