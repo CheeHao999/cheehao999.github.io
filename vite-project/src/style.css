@@ -70,7 +70,8 @@ body::before {
     radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.08), transparent 25%),
     radial-gradient(circle at 85% 30%, rgba(45, 212, 191, 0.05), transparent 25%);
   pointer-events: none;
-  will-change: transform; /* Hint to browser to promote to layer */
+  will-change: transform;
+  /* Hint to browser to promote to layer */
 }
 
 /* Typography Utilities */
@@ -118,7 +119,8 @@ a:hover {
   margin-inline: auto;
   padding: var(--space-md);
   position: relative;
-  z-index: 1; /* Ensure content stays above video */
+  z-index: 1;
+  /* Ensure content stays above video */
 }
 
 .btn {
@@ -126,14 +128,17 @@ a:hover {
   align-items: center;
   justify-content: center;
   gap: 0.5em;
-  height: 48px; /* Fixed height for perfect centering */
-  padding: 0 2em; /* Horizontal padding only */
+  height: 48px;
+  /* Fixed height for perfect centering */
+  padding: 0 2em;
+  /* Horizontal padding only */
   background: var(--color-primary);
   color: white;
   border-radius: 99px;
   font-weight: 500;
   font-size: 1rem;
-  line-height: 1; /* Reset line height */
+  line-height: 1;
+  /* Reset line height */
   transition: transform 0.3s var(--ease-elastic), box-shadow 0.3s var(--ease-smooth);
   border: 1px solid transparent;
 }
@@ -191,6 +196,15 @@ section,
   padding-top: 0;
 }
 
+@media (max-width: 768px) {
+
+  section,
+  [id] {
+    scroll-margin-top: 0;
+    /* Minimal margin on mobile as dock is at bottom */
+  }
+}
+
 /* Remove extra padding from Hero to let video fill screen */
 #hero {
   padding-top: 0;
@@ -199,9 +213,17 @@ section,
 
 
 @keyframes plasma-flow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .section-divider {
@@ -211,10 +233,9 @@ section,
   transform: translateX(-50%);
   width: 90%;
   height: 3px;
-  background: linear-gradient(90deg, 
-    #ff004c, #ff9f00, #ffee00, #00ff85, #00c8ff, #7a5cff, #ff00c8,
-    #ff004c, #ff9f00, #ffee00, #00ff85, #00c8ff, #7a5cff, #ff00c8
-  );
+  background: linear-gradient(90deg,
+      #ff004c, #ff9f00, #ffee00, #00ff85, #00c8ff, #7a5cff, #ff00c8,
+      #ff004c, #ff9f00, #ffee00, #00ff85, #00c8ff, #7a5cff, #ff00c8);
   background-size: 300% 100%;
   animation: plasma-flow 3s linear infinite;
   border-radius: 99px;
