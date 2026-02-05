@@ -191,8 +191,8 @@ a:hover {
 
 section,
 [id] {
-  scroll-margin-top: 100px;
-  /* height of navbar + breathing room */
+  scroll-margin-top: 0;
+  /* Reset to 0 to ensure section starts exactly at viewport top */
   padding-top: 0;
 }
 

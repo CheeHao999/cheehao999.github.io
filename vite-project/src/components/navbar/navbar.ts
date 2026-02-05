@@ -76,20 +76,16 @@ navbarContainer.querySelectorAll('a[href^="#"]').forEach(link => {
     const target = document.querySelector(targetId);
 
     if (target) {
-      if (window.innerWidth <= 768) {
-        // Mobile Navigation: Fast jump without showing intermediate sections
+      // Instant jump for all views to skip intermediate sections as requested
+      target.scrollIntoView({ behavior: 'auto' });
 
-        // Mobile Navigation: Direct jump for instant feedback
-        target.scrollIntoView({ behavior: 'auto' });
-
-        // Update active state immediately
-        const navLinks = navbarContainer.querySelectorAll('.nav-links a');
-        navLinks.forEach(l => l.classList.remove('active'));
-        const currentLink = navbarContainer.querySelector(`.nav-links a[href="${targetId}"]`);
-        currentLink?.classList.add('active');
-      } else {
-        // Desktop: Standard smooth scroll
-        target.scrollIntoView({ behavior: 'smooth' });
+      // Update active state immediately
+      const navLinks = navbarContainer.querySelectorAll('.nav-links a');
+      navLinks.forEach(l => l.classList.remove('active'));
+      const targetHref = targetId;
+      const currentLink = navbarContainer.querySelector(`.nav-links a[href="${targetHref}"]`);
+      if (currentLink) {
+        currentLink.classList.add('active');
       }
     }
   });
