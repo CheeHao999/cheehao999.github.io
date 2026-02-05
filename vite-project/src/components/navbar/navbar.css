@@ -16,7 +16,7 @@
 
 .navbar.scrolled {
     background: transparent;
-    backdrop-filter: blur(12px) saturate(160%);
+    backdrop-filter: none;
     border-bottom: 1px solid transparent;
     /* Made transparent */
     padding: 0.75rem 0;
@@ -152,7 +152,7 @@
     /* Scrolled State (Glassy Dock) */
     .navbar.scrolled {
         background: rgba(18, 18, 22, 0.4);
-        backdrop-filter: blur(20px) saturate(180%);
+        backdrop-filter: none;
         border: 1px solid rgba(255, 255, 255, 0.08);
         box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.5);
         bottom: 2rem;
@@ -220,7 +220,7 @@
         /* Restore background when floating alone */
         border: 1px solid rgba(255, 255, 255, 0.1);
         /* Restore border */
-        backdrop-filter: blur(10px);
+        backdrop-filter: none;
     }
 
     /* Rotate arrow when hidden */
