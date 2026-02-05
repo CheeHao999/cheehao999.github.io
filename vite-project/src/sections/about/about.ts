@@ -81,15 +81,29 @@ if (aboutContainer) {
 
     updateWalls();
 
+    // Interface for custom body with render element
+    interface ExtendedBody extends Matter.Body {
+      render: {
+        visible: boolean;
+        opacity?: number;
+        sprite?: Matter.ISprite;
+        element?: HTMLElement; // Custom property
+      }
+    }
+
     // Skills Data
-    const skills = [
+    const allSkills = [
       'TypeScript', 'React', 'Node.js', 'WebGL', 'Three.js', 
       'GSAP', 'Next.js', 'Python', 'Tailwind', 'Git',
       'Figma', 'UI/UX', 'SQL', 'GraphQL', 'Vite', 'Matter.js'
     ];
 
+    // Optimize for mobile: fewer balls to prevent lag
+    const isMobile = window.innerWidth < 768;
+    const skills = isMobile ? allSkills.slice(0, 10) : allSkills;
+
     // State to track bodies and elements
-    let bodies: Matter.Body[] = [];
+    let bodies: ExtendedBody[] = [];
     let elements: HTMLElement[] = [];
 
     const spawnSkills = () => {
@@ -121,13 +135,16 @@ if (aboutContainer) {
           restitution: 0.5, // Bounciness
           friction: 0.1,
           angle: (Math.random() - 0.5) * 0.5 // Slight random rotation
-        });
+        }) as ExtendedBody;
 
         bodies.push(body);
         elements.push(el);
         
         // Store reference to element on body
-        // @ts-ignore
+        if (!body.render) { 
+            // @ts-ignore - Initialize if missing (though Matter usually has it)
+            body.render = {}; 
+        }
         body.render.element = el;
       });
 
