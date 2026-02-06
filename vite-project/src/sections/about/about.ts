@@ -57,25 +57,37 @@ if (aboutContainer) {
     let height = container.clientHeight;
 
     // Create walls variables
-    let ground: Matter.Body;
-    let leftWall: Matter.Body;
-    let rightWall: Matter.Body;
-    
+    let ground: Matter.Body | undefined;
+    let leftWall: Matter.Body | undefined;
+    let rightWall: Matter.Body | undefined;
+
+    // Use ResizeObserver for more robust dimension tracking
+    const resizeObserver = new ResizeObserver(() => {
+      updateWalls();
+    });
+    resizeObserver.observe(container);
+
     // Function to create/update walls
     const updateWalls = () => {
       // Remove existing walls if they exist
-      if (ground) Composite.remove(world, [ground, leftWall, rightWall]);
-      
+      if (ground && leftWall && rightWall) Composite.remove(world, [ground, leftWall, rightWall]);
+
       width = container.clientWidth;
       height = container.clientHeight;
-      
-      const wallThickness = 100; // Thicker walls to prevent tunneling
-      const wallOptions = { isStatic: true, render: { visible: false } };
-      
-      ground = Bodies.rectangle(width / 2, height + wallThickness/2, width, wallThickness, wallOptions);
-      leftWall = Bodies.rectangle(-wallThickness/2, height / 2, wallThickness, height * 2, wallOptions);
-      rightWall = Bodies.rectangle(width + wallThickness/2, height / 2, wallThickness, height * 2, wallOptions);
-      
+
+      const wallThickness = 1000; // Much thicker walls to prevent tunneling
+      const wallOptions = { isStatic: true, render: { visible: false }, friction: 1, frictionStatic: 1 };
+
+      // Position walls so their inner edge matches the container boundary
+      // ground center y = height + thickness/2 -> top edge at height
+      ground = Bodies.rectangle(width / 2, height + wallThickness / 2, width + 200, wallThickness, wallOptions);
+
+      // left wall center x = -thickness/2 -> right edge at 0
+      leftWall = Bodies.rectangle(-wallThickness / 2, height / 2, wallThickness, height * 2 + 200, wallOptions);
+
+      // right wall center x = width + thickness/2 -> left edge at width
+      rightWall = Bodies.rectangle(width + wallThickness / 2, height / 2, wallThickness, height * 2 + 200, wallOptions);
+
       Composite.add(world, [ground, leftWall, rightWall]);
     };
 
@@ -87,9 +99,9 @@ if (aboutContainer) {
         visible: boolean;
         opacity?: number;
         sprite?: {
-            texture: string;
-            xScale: number;
-            yScale: number;
+          texture: string;
+          xScale: number;
+          yScale: number;
         };
         element?: HTMLElement; // Custom property
       }
@@ -97,7 +109,7 @@ if (aboutContainer) {
 
     // Skills Data
     const allSkills = [
-      'TypeScript', 'React', 'Node.js', 'WebGL', 'Three.js', 
+      'TypeScript', 'React', 'Node.js', 'WebGL', 'Three.js',
       'GSAP', 'Next.js', 'Python', 'Tailwind', 'Git',
       'Figma', 'UI/UX', 'SQL', 'GraphQL', 'Vite', 'Matter.js'
     ];
@@ -130,24 +142,25 @@ if (aboutContainer) {
         const w = el.offsetWidth;
         const h = el.offsetHeight;
 
-        // Random starting position
-        const x = Math.random() * (width - w) + w / 2;
-        const y = -Math.random() * 500 - 50; // Start above
+        // Random starting position within bounds
+        const x = Math.random() * (width - w - 40) + w / 2 + 20;
+        const y = -Math.random() * 500 - 100; // Start above
 
         // Create body
         const body = Bodies.rectangle(x, y, w, h, {
-          restitution: 0.5, // Bounciness
+          restitution: 0.6, // Higher bounciness
           friction: 0.1,
+          frictionAir: 0.01,
           angle: (Math.random() - 0.5) * 0.5 // Slight random rotation
         }) as ExtendedBody;
 
         bodies.push(body);
         elements.push(el);
-        
+
         // Store reference to element on body
-        if (!body.render) { 
-            // @ts-ignore - Initialize if missing (though Matter usually has it)
-            body.render = {}; 
+        if (!body.render) {
+          // @ts-ignore
+          body.render = {};
         }
         body.render.element = el;
       });
@@ -164,7 +177,7 @@ if (aboutContainer) {
       // Rotate button animation
       refreshBtn.classList.add('spinning');
       setTimeout(() => refreshBtn.classList.remove('spinning'), 500);
-      
+
       spawnSkills();
     });
 
@@ -188,7 +201,7 @@ if (aboutContainer) {
 
     // Run the engine
     const runner = Runner.create();
-    
+
     // Render loop and Intersection Observer for performance
     let renderLoopId: number | null = null;
     let isRunning = false;
@@ -199,21 +212,14 @@ if (aboutContainer) {
         const { x, y } = body.position;
         const angle = body.angle;
 
-        // Continuous Boundary Enforcement (Fix for "flying out")
-        // If body goes outside, gently nudge it back
-        if (x < 0) {
-            Matter.Body.setPosition(body, { x: 30, y: y });
-            Matter.Body.setVelocity(body, { x: 2, y: body.velocity.y });
+        // Failsafe: Respawn only if deeply out of bounds (fallen through floor)
+        if (y > height + 200) {
+          Matter.Body.setPosition(body, { x: width / 2, y: -50 });
+          Matter.Body.setVelocity(body, { x: 0, y: 0 });
         }
-        if (x > width) {
-            Matter.Body.setPosition(body, { x: width - 30, y: y });
-            Matter.Body.setVelocity(body, { x: -2, y: body.velocity.y });
-        }
-        if (y > height + 50) {
-            // If it somehow falls through floor, reset to top
-            Matter.Body.setPosition(body, { x: x, y: -100 });
-            Matter.Body.setVelocity(body, { x: 0, y: 0 });
-        }
+
+        // We removed the aggressive "snap back" logic for x-axis because 
+        // the thick walls will handle containment naturally and physically.
 
         // Sync DOM with physics body
         el.style.transform = `translate(${x}px, ${y}px) rotate(${angle}rad) translate(-50%, -50%)`;
@@ -248,24 +254,10 @@ if (aboutContainer) {
 
     observer.observe(container);
 
-    // Handle resize
-    window.addEventListener('resize', () => {
-      // Recreate walls to fit new dimensions
-      updateWalls();
-      
-      // Push any out-of-bounds bodies back in
-      bodies.forEach(body => {
-        if (body.position.x > width) {
-          Matter.Body.setPosition(body, { x: width - 50, y: body.position.y });
-        }
-        if (body.position.x < 0) {
-          Matter.Body.setPosition(body, { x: 50, y: body.position.y });
-        }
-        if (body.position.y > height) {
-          Matter.Body.setPosition(body, { x: body.position.x, y: height - 50 });
-        }
-      });
-    });
+    // Cleanup function (optional but good practice)
+    // currently no way to trigger it unless we structured this as a class or improved module
+    // But ResizeObserver should be kept in mind.
+
   };
 
   // Initialize after a slight delay to ensure DOM is ready and layout is calculated
